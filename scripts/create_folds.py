@@ -7,8 +7,8 @@ def write_csv(data, fname):
         for sample in data:
             f.write('{},{}\n'.format(sample[0], sample[1]))
 
-data_dir = '/scratch/hansencb/Classification_datasets/SkinLesions'
-class_dirs = ['0', '1', '2', '3', '4', '5', '6']
+data_dir = 'sample@200/train'
+class_dirs = ['0', '1']
 out_dir = 'folds'
 k = 5
 val_percent = 0.025
@@ -16,6 +16,8 @@ os.makedirs(out_dir, exist_ok=True)
 
 data_by_class = {}
 total = 0
+
+
 for c in class_dirs:
     label = int(c)
     data_by_class[label] = []
@@ -59,10 +61,3 @@ for i in range(k):
             labeled.extend(train[c][0:numl])
         write_csv(labeled, os.path.join(fold_dir, 'train_labeled_{}.csv'.format(len(labeled))))
         write_csv(unlabeled, os.path.join(fold_dir, 'train_unlabeled_{}.csv'.format(len(labeled))))
-
-
-
-
-
-
-
