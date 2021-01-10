@@ -3,8 +3,6 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import models
 from pytorch_src.data import *
-from pytorch_src.utils import *
-from pytorch_src.model import *
 from pytorch_src.batch import *
 import random
 import argparse
