@@ -13,7 +13,7 @@ import os
 def create_model(device, ema=False):
     model = models.densenet169(pretrained=True)
     ft = model.classifier.in_features
-    model.classifier = torch.nn.Linear(ft, 7)
+    model.classifier = torch.nn.Linear(ft, 2)
     model = model.to(device)
 
     if ema:
