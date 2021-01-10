@@ -52,7 +52,7 @@ def train(model, device, loader, optimizer, config, ema_optimizer, epoch):
             # if (batch_idx+1) * loader.batch_size < loader.dataset.stand_len:
             data = sample['image']
             target = sample['target']
-            target = torch.zeros(target.shape[0], 7).scatter_(1, target.view(-1, 1), 1)
+            target = torch.zeros(target.shape[0], 2).scatter_(1, target.view(-1, 1), 1)
             data, target = data.to(device), target.to(device)
 
             ul_data1 = sample['ul_img1']
@@ -166,7 +166,7 @@ def test(model, device, loader):
                     file = sample['file']
 
                     labels = target.to(device)
-                    target = torch.zeros(target.shape[0], 7).scatter_(1, target.view(-1, 1), 1)
+                    target = torch.zeros(target.shape[0], 2).scatter_(1, target.view(-1, 1), 1)
                     data, target = data.to(device), target.to(device)
                     output = model(data)
                     output = output.to(device)
