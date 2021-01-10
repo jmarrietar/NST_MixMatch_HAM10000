@@ -1,7 +1,6 @@
 from __future__ import print_function, division
 import torch
 import numpy as np
-from pytorch_src.vat import VATLoss
 import torch.nn.functional as F
 from tqdm import tqdm
 from sklearn.metrics import balanced_accuracy_score
