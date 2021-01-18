@@ -94,17 +94,25 @@ class Train_Dataset(Dataset):
                             img = self.test_preprocess(img).to(device)
                             output = model(img.unsqueeze(0))
 
-                            if len(output[0]) < 2:
+                            try:
+                                if len(output[0]) < 2:
+                                    dateTimeObj = datetime.now()
+                                    timestampStr = dateTimeObj.strftime("%H:%M:%S")
+                                    torch.save(img, 'out/img_{}.pt'.format(timestampStr))
+                                    continue
+
+                                logit = torch.softmax(output, dim=1)
+                                avg_logit += logit.cpu().squeeze()
+
+                                pbar.set_description("Reassigning unlabeled image labels")
+                                pbar.update(1)
+
+                            except:
+                                print("An exception occurred")
                                 dateTimeObj = datetime.now()
                                 timestampStr = dateTimeObj.strftime("%H:%M:%S")
                                 torch.save(img, 'out/img_{}.pt'.format(timestampStr))
-                                continue
-
-                            logit = torch.softmax(output, dim=1)
-                            avg_logit += logit.cpu().squeeze()
-
-                            pbar.set_description("Reassigning unlabeled image labels")
-                            pbar.update(1)
+                                torch.save(img, '../{}/{}/img_{}.pt'.format('drive/My Drive/Project', "model",  timestampStr))
 
                         avg_logit /= len(equiv)
                         new_class = int(torch.argmax(avg_logit).item())
