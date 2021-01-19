@@ -95,11 +95,13 @@ class Train_Dataset(Dataset):
                             output = model(img.unsqueeze(0))
 
                             try:
+                                """
                                 if len(output[0]) < 2:
                                     dateTimeObj = datetime.now()
                                     timestampStr = dateTimeObj.strftime("%H:%M:%S")
                                     torch.save(img, 'out/img_{}.pt'.format(timestampStr))
                                     continue
+                                """
 
                                 logit = torch.softmax(output, dim=1)
                                 avg_logit += logit.cpu().squeeze()
